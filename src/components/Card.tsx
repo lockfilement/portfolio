@@ -44,34 +44,29 @@ export default function CardComponent() {
 
 	const socialLinks: SocialLink[] = useMemo(
 		() => [
-			{
-				href: "https://t.me/doxiado",
-				icon: "mdi:telegram",
-				alt: "Telegram",
-			},
-			{
-				href: "https://github.com/doxiado-dev",
-				icon: "mdi:github",
-				alt: "GitHub",
-			},
-			{
-				href: "https://steamcommunity.com/profiles/76561199377962245",
-				icon: "mdi:steam",
-				alt: "Steam",
-			},
-			{
-				href: "https://stats.fm/doxiado",
-				icon: "/assets/statsfm.png",
-				alt: "stats.fm",
-			},
-			{
-				href: "https://ko-fi.com/doxiado",
-				icon: "famicons:cash",
-				alt: "Ko-fi",
-			},
-		],
-		[],
-	);
+      {
+        href: "https://t.me/doxiado      ",
+        icon: "mdi:telegram",
+        alt: "Telegram",
+      },
+      {
+        href: "https://github.com/doxiado-dev      ",
+        icon: "mdi:github",
+        alt: "GitHub",
+      },
+      {
+        href: "https://discord.com/users/763141886834769980      ",
+        icon: "mdi:discord",
+        alt: "Discord",
+      },
+      {
+        href: "https://stats.fm/lockfile/      ",
+        icon: "/assets/statsfm.png",
+        alt: "stats.fm",
+      },
+    ],
+    []
+  );
 
 	const translatedQuotes = useMemo(
 		() => getTranslatedQuotes(language),
@@ -166,23 +161,23 @@ export default function CardComponent() {
 											index === 1 || index === 3 ? "shadow-glow" : ""
 										}`}
 										initial={{
-											backgroundPosition: "-100%",
-											opacity: 0.5,
-											backgroundImage:
-												index === 0 || index === 2
-													? "linear-gradient(to right, rgb(229, 231, 235), rgb(209, 213, 219), rgb(229, 231, 235))"
-													: "linear-gradient(to right, rgb(161, 161, 170), rgb(212, 212, 216), rgb(161, 161, 170))",
-										}}
-										animate={{
-											backgroundPosition: "200%",
-											opacity: 1,
-											backgroundImage:
-												index === 1
-													? "linear-gradient(to top,rgb(235, 64, 52),rgb(235, 147, 52))"
-													: index === 3
-														? "linear-gradient(to right, rgb(255, 221, 0), rgb(3, 77, 162), rgb(200, 23, 52))"
-														: "linear-gradient(to right, rgb(229, 231, 235), rgb(209, 213, 219), rgb(229, 231, 235))",
-										}}
+                      backgroundPosition: "-100%",
+                      opacity: 0.5,
+                      backgroundImage:
+                        index === 0 || index === 2
+                          ? "linear-gradient(to right, rgb(229, 231, 235), rgb(209, 213, 219), rgb(229, 231, 235))"
+                          : "linear-gradient(to right, rgb(161, 161, 170), rgb(212, 212, 216), rgb(161, 161, 170))",
+                    }}
+                    animate={{
+                      backgroundPosition: "200%",
+                      opacity: 1,
+                      backgroundImage:
+                        index === 1
+                          ? "linear-gradient(to top,rgba(255, 17, 0, 1),rgba(255, 132, 0, 1))"
+                          : index === 3
+                          ? "linear-gradient(to right, rgba(255, 238, 0, 1), rgba(0, 26, 255, 1), rgba(255, 0, 0, 1))"
+                          : "linear-gradient(to right, rgb(229, 231, 235), rgb(209, 213, 219), rgb(229, 231, 235))",
+                    }}
 										transition={{
 											duration: 2.5,
 											delay: index * 0.25 + 0.5,

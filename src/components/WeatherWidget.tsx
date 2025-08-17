@@ -51,6 +51,19 @@ export interface WeatherData {
 	error?: string;
 }
 
+const weatherIcons: Record<string, { Component: React.ComponentType; color: string }> = {
+	clear: { Component: Sun, color: "text-yellow-300" },
+	sunny: { Component: Sun, color: "text-yellow-300" },
+	thunder: { Component: CloudLightning, color: "text-yellow-400" },
+	fog: { Component: CloudFog, color: "text-gray-300" },
+	"heavy rain": { Component: CloudRainWind, color: "text-blue-200" },
+	rain: { Component: CloudRain, color: "text-blue-200" },
+	snow: { Component: CloudSnow, color: "text-blue-100" },
+	"partly cloudy": { Component: CloudSun, color: "text-gray-200" },
+	overcast: { Component: Cloudy, color: "text-gray-300" },
+	default: { Component: SunDim, color: "text-gray-300" },
+};
+
 export default function WeatherWidget({
 	isOpen,
 	onClose,
@@ -73,58 +86,16 @@ export default function WeatherWidget({
 		return () => document.removeEventListener("keydown", handleEscapeKey);
 	}, [isOpen, onClose]);
 
-	const getWeatherIcon = (condition: string, size: number = 5) => {
+	function getWeatherIcon(condition: string, size: number = 5) {
 		const lowercaseCondition = condition.toLowerCase();
-		let IconComponent;
-		let iconColor = "text-gray-300";
-
-		if (
-			lowercaseCondition.includes("clear") ||
-			lowercaseCondition.includes("sunny")
-		) {
-			IconComponent = Sun;
-			iconColor = "text-yellow-300";
-		} else if (lowercaseCondition.includes("thunder")) {
-			IconComponent = CloudLightning;
-			iconColor = "text-yellow-400";
-		} else if (lowercaseCondition.includes("fog")) {
-			IconComponent = CloudFog;
-			iconColor = "text-gray-300";
-		} else if (
-			lowercaseCondition.includes("heavy rain") ||
-			lowercaseCondition.includes("torrential")
-		) {
-			IconComponent = CloudRainWind;
-			iconColor = "text-blue-200";
-		} else if (lowercaseCondition.includes("rain")) {
-			IconComponent = CloudRain;
-			iconColor = "text-blue-200";
-		} else if (
-			lowercaseCondition.includes("snow") ||
-			lowercaseCondition.includes("blizzard")
-		) {
-			IconComponent = CloudSnow;
-			iconColor = "text-blue-100";
-		} else if (lowercaseCondition.includes("partly cloudy")) {
-			IconComponent = CloudSun;
-			iconColor = "text-gray-200";
-		} else if (
-			lowercaseCondition.includes("overcast") ||
-			lowercaseCondition.includes("cloudy")
-		) {
-			IconComponent = Cloudy;
-			iconColor = "text-gray-300";
-		} else {
-			IconComponent = SunDim;
-			iconColor = "text-gray-300";
-		}
+		const iconInfo = weatherIcons[lowercaseCondition] || weatherIcons.default;
 
 		return (
 			<motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
-				<IconComponent className={`w-${size} h-${size} ${iconColor}`} />
+				<iconInfo.Component className={`w-${size} h-${size} ${iconInfo.color}`} />
 			</motion.div>
 		);
-	};
+	}
 
 	if (!isOpen) return null;
 
@@ -132,23 +103,33 @@ export default function WeatherWidget({
 		<AnimatePresence mode="popLayout">
 			{isOpen && (
 				<motion.div
-					className="fixed inset-0 flex items-center justify-center z-[9999] backdrop-blur-[12px]"
+					className="fixed inset-0 flex items-center justify-center z-[9999] backdrop-blur-[10px]"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
 					transition={{
-						duration: 0.25,
+						duration: 0.35,
 						ease: [0.25, 0.8, 0.25, 1],
 					}}
 				>
-					<div className="absolute inset-0 bg-black/60" onClick={onClose} />
+					<motion.div
+						className="absolute inset-0 bg-black bg-opacity-50"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{
+							duration: 0.35,
+							ease: [0.25, 0.8, 0.25, 1],
+						}}
+						onClick={onClose}
+					/>
 					<motion.div
 						className="w-[95%] max-w-lg relative z-10"
-						initial={{ scale: 0.98, opacity: 0 }}
-						animate={{ scale: 1, opacity: 1 }}
-						exit={{ scale: 0.98, opacity: 0 }}
+						initial={{ scale: 0.95, opacity: 0, y: 20 }}
+						animate={{ scale: 1, opacity: 1, y: 0 }}
+						exit={{ scale: 0.95, opacity: 0, y: 20 }}
 						transition={{
-							duration: 0.25,
+							duration: 0.35,
 							ease: [0.25, 0.8, 0.25, 1],
 						}}
 						onClick={(e) => e.stopPropagation()}
@@ -278,7 +259,7 @@ export default function WeatherWidget({
 													</h1>
 													<p className="text-zinc-400">
 														{t(
-															`weather.conditions.${weatherData.condition.toLowerCase().replace(/ /g, "_")}`,
+															`weather.conditions.${weatherData.condition.toLowerCase().replace(/ /g, "_")}`
 														)}
 													</p>
 													{weatherData.feelsLike && (
@@ -356,6 +337,7 @@ export default function WeatherWidget({
 													<h3 className="text-sm font-medium text-zinc-400 mb-3 text-center">
 														{t("weather.forecast")}
 													</h3>
+
 													<div className="grid grid-cols-3 gap-2">
 														{weatherData.forecast.map((day, index) => (
 															<div
@@ -363,7 +345,11 @@ export default function WeatherWidget({
 																className="p-2 bg-zinc-800/20 rounded-lg text-center outline-none outline-[0px] outline-dashed outline-offset-2 hover:outline hover:outline-2 hover:outline-dashed hover:outline-zinc-700 hover:-translate-y-0.5 transition-all"
 															>
 																<p className="text-xs text-zinc-500 mb-1.5">
-																	{day.date.split("-").join("/")}
+																	{new Date(day.date).toLocaleDateString(language, {
+																		weekday: 'short',
+																		month: 'short',
+																		day: 'numeric'
+																	})}
 																</p>
 																<div className="my-2 flex justify-center">
 																	{getWeatherIcon(day.condition, 8)}
@@ -379,6 +365,24 @@ export default function WeatherWidget({
 																		{day.minTemp}
 																	</span>
 																</p>
+																{day.humidity && (
+																	<p className="text-xs text-blue-400 mt-1">
+																		<Droplets className="inline w-3 h-3 mr-1" />
+																		{day.humidity}
+																	</p>
+																)}
+																{day.windSpeed && (
+																	<p className="text-xs text-blue-300 mt-1">
+																		<Wind className="inline w-3 h-3 mr-1" />
+																		{day.windSpeed}
+																	</p>
+																)}
+																{day.visibility && (
+																	<p className="text-xs text-zinc-400 mt-1">
+																		<Eye className="inline w-3 h-3 mr-1" />
+																		{day.visibility}
+																	</p>
+																)}
 															</div>
 														))}
 													</div>

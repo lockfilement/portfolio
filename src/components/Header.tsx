@@ -187,7 +187,7 @@ export default function Header() {
 							>
 								<h1 className="text-xl font-bold transition-all duration-300 non-selectable relative">
 									<span className="inline-block bg-gradient-to-r from-[rgba(240,237,255,0.7)] via-white to-[rgba(240,237,255,0.7)] bg-clip-text text-transparent bg-[length:200%] animate-gradient transition-all duration-300 tracking-[0.25px]">
-										Doxiado
+										yann
 									</span>
 								</h1>
 								<div
@@ -285,7 +285,7 @@ export default function Header() {
 								</a>
 								<div className="h-6 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent mx-1.5" />
 								<a
-									href="mailto:contact.doxiado@gmail.com"
+									href="mailto:contact.yannx@gmail.com"
 									onClick={() => setHamburgerTriggered(false)}
 									className="nav-link-icon text-white/80 hover:text-white transition-all duration-300 hover:text-shadow-[0_0_12px_rgba(255,255,255,0.7)] non-selectable"
 								>
@@ -304,7 +304,7 @@ export default function Header() {
 									</svg>
 								</a>
 								<a
-									href="https://github.com/doxiado-dev/portfolio"
+									href="https://xanwashere.netlify.app/"
 									onClick={() => setHamburgerTriggered(false)}
 									className="nav-link-icon text-white/80 hover:text-white transition-all duration-300 hover:text-shadow-[0_0_12px_rgba(255,255,255,0.7)] non-selectable"
 									target="_blank"
@@ -389,7 +389,7 @@ export default function Header() {
 											{t("commissions")}
 										</a>
 										<a
-											href="mailto:contact.doxiado@gmail.com"
+											href="mailto:contact.yannx@gmail.com"
 											className="hamburger-navlink text-white/80 hover:text-white py-2 hover:bg-white/10 transition-all duration-300 hover:text-shadow-[0_0_12px_rgba(255,255,255,0.7)] non-selectable"
 										>
 											<div className="flex items-center">
@@ -410,7 +410,7 @@ export default function Header() {
 											</div>
 										</a>
 										<a
-											href="https://github.com/doxiado-dev/portfolio"
+											href="https://xanwashere.netlify.app/"
 											className="hamburger-navlink text-white/80 hover:text-white py-2 hover:bg-white/10 transition-all duration-300 hover:text-shadow-[0_0_12px_rgba(255,255,255,0.7)] non-selectable"
 											target="_blank"
 											rel="noopener noreferrer"

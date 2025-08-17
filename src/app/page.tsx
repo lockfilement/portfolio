@@ -1,46 +1,52 @@
-"use client";
-import dynamic from "next/dynamic";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
-import Background from "@/components/Background";
-import Header from "@/components/Header";
-import Time from "@/components/Time";
-import { SocketProvider } from "@/hooks/SocketContext";
+'use client';
 
-const Cat = dynamic(() => import("@/components/Cat"));
-const Technologies = dynamic(() => import("@/components/Technologies"));
-const CardComponent = dynamic(() => import("@/components/Card"));
-const Projects = dynamic(() => import("@/components/Projects"));
-const Footer = dynamic(() => import("@/components/Footer"));
-const MusicPlayer = dynamic(() => import("@/components/MusicPlayer"));
-const About = dynamic(() => import("@/components/About"));
-const Statistics = dynamic(() => import("@/components/Statistics"));
-const Comissions = dynamic(() => import("@/components/Comissions"));
-const TranslateGlobe = dynamic(() => import("@/components/Globe"));
+import dynamic from 'next/dynamic';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
+import Background from '@/components/Background';
+import Header from '@/components/Header';
+import Time from '@/components/Time';
+import { SocketProvider } from '@/hooks/SocketContext';
+
+// Carga diferida de componentes del cliente
+const Cat = dynamic(() => import('@/components/Cat'), { ssr: false });
+const Technologies = dynamic(() => import('@/components/Technologies'), { ssr: false });
+const CardComponent = dynamic(() => import('@/components/Card'), { ssr: false });
+const Projects = dynamic(() => import('@/components/Projects'), { ssr: false });
+const Footer = dynamic(() => import('@/components/Footer'), { ssr: false });
+const MusicPlayer = dynamic(() => import('@/components/MusicPlayer'), { ssr: false });
+const About = dynamic(() => import('@/components/About'), { ssr: false });
+const Statistics = dynamic(() => import('@/components/Statistics'), { ssr: false });
+const Comissions = dynamic(() => import('@/components/Comissions'), { ssr: false });
+const TranslateGlobe = dynamic(() => import('@/components/Globe'), { ssr: false });
 
 export default function Home() {
-	return (
-		<>
-			<Background />
-			<SocketProvider>
-				<Header />
-			</SocketProvider>
+  return (
+    <>
+      {/* Fondo y header */}
+      <Background />
+      <SocketProvider>
+        <Header />
+      </SocketProvider>
 
-			<Time />
+      {/* Secciones principales */}
+      <Time />
+      <CardComponent />
+      <MusicPlayer />
+      <Technologies />
+      <About />
+      <Statistics />
+      <Comissions />
+      <Projects />
+      <Footer />
 
-			<CardComponent />
-			<MusicPlayer />
-			<Technologies />
-			<About />
-			<Statistics />
-			<Comissions />
-			<Projects />
-			<Footer />
-			<Cat />
-			<TranslateGlobe />
+      {/* Componentes flotantes o interactivos */}
+      <Cat />
+      <TranslateGlobe />
 
-			<SpeedInsights />
-			<Analytics />
-		</>
-	);
+      {/* Analítica */}
+      <SpeedInsights />
+      <Analytics />
+    </>
+  );
 }

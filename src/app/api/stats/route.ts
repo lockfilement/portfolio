@@ -1,140 +1,107 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-declare global {
-	var statsCache: StatsCache | undefined;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
+async function fetchWithAuth(url: string, options: RequestInit = {}) {
+  return fetch(url, {
+    ...options,
+    headers: {
+      ...options.headers,
+      Authorization: `token ${GITHUB_TOKEN}`,
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
 }
-
-interface StatsCache {
-	data: {
-		contributions: any;
-		total: number;
-		languages: { [key: string]: number };
-		wakatime: any;
-	} | null;
-	timestamp: number;
-}
-
-if (!global.statsCache) {
-	global.statsCache = {
-		data: null,
-		timestamp: 0,
-	} as StatsCache;
-}
-
-const CACHE_DURATION = 120 * 60 * 1000; // 2 hours in milliseconds
 
 export async function GET() {
-	try {
-		const now = Date.now();
-		const cache = global.statsCache as StatsCache;
-		if (cache.data && now - cache.timestamp < CACHE_DURATION) {
-			return NextResponse.json({
-				...cache.data,
-				cached: true,
-			});
-		}
+  try {
+    const toDate = new Date().toISOString();
+    const fromDate = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString();
 
-		const fetchWithCheck = async (url: string, options = {}) => {
-			const res = await fetch(url, options);
-			if (!res.ok) {
-				throw new Error(
-					`Fetch error: ${url} - ${res.status} ${res.statusText}`,
-				);
-			}
-			return res.json();
-		};
+    const graphQLQuery = `
+      query {
+        viewer {
+          contributionsCollection(from: "${fromDate}", to: "${toDate}") {
+            contributionCalendar {
+              totalContributions
+              weeks {
+                contributionDays {
+                  date
+                  contributionCount
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
 
-		const contributionsData = await fetchWithCheck(
-			"https://github-contributions-api.jogruber.de/v4/doxiado-dev?y=last",
-			{ next: { revalidate: 18000 } }, // Cache for 5 hours
-		);
+    const graphQLRes = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        Authorization: `bearer ${GITHUB_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query: graphQLQuery }),
+    });
 
-		const wakatimeData = await fetchWithCheck(
-			"https://wakatime.com/api/v1/users/lockfile/stats?is_including_today=true",
-			{ next: { revalidate: 18000 } }, // Cache for 5 hours
-		);
+    const graphQLData = await graphQLRes.json();
+    const calendar = graphQLData.data.viewer.contributionsCollection.contributionCalendar;
+    const total = calendar.totalContributions;
 
-		const reposRes = await fetch(
-			"https://api.github.com/users/doxiado-dev/repos",
-			{
-				headers: {
-					Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-					Accept: "application/vnd.github.v3+json",
-				},
-				next: { revalidate: 18000 }, // Cache for 5 hours
-			},
-		);
+    const allDays = calendar.weeks.flatMap((week: any) => week.contributionDays);
 
-		if (!reposRes.ok) {
-			throw new Error(
-				`GitHub API error: ${reposRes.status} ${reposRes.statusText}`,
-			);
-		}
+    const maxCount = Math.max(...allDays.map((day: any) => day.contributionCount));
+    const getLevel = (count: number) => {
+      if (count === 0) return 0;
+      if (count < maxCount * 0.25) return 1;
+      if (count < maxCount * 0.5) return 2;
+      if (count < maxCount * 0.75) return 3;
+      return 4;
+    };
 
-		const repos = await reposRes.json();
+    const contributions = allDays.map((day: any) => ({
+      date: day.date,
+      count: day.contributionCount,
+      level: getLevel(day.contributionCount),
+    }));
 
-		if (!Array.isArray(repos)) {
-			throw new Error("Unexpected response format from GitHub API");
-		}
+    const publicReposRes = await fetchWithAuth(`https://api.github.com/user/repos?visibility=public&per_page=100`);
+    const publicRepos = await publicReposRes.json();
 
-		const filteredRepos = repos.filter(
-			(repo) => !repo.fork || repo.full_name === "doxiado-dev/dots-hyprland",
-		);
+    const publicLanguages: { [key: string]: number } = {};
+    for (const repo of publicRepos) {
+      if (!repo.fork) {
+        const langRes = await fetchWithAuth(repo.languages_url);
+        const repoLanguages = await langRes.json();
+        for (const [lang, bytes] of Object.entries(repoLanguages)) {
+          publicLanguages[lang] = (publicLanguages[lang] || 0) + (bytes as number);
+        }
+      }
+    }
 
-		const languagePromises = filteredRepos.map((repo) =>
-			fetchWithCheck(repo.languages_url, { next: { revalidate: 18000 } }),
-		);
+    const privateReposRes = await fetchWithAuth(`https://api.github.com/user/repos?visibility=private&per_page=100`);
+    const privateRepos = await privateReposRes.json();
 
-		const languageData = await Promise.all(languagePromises);
+    const privateLanguages: { [key: string]: number } = {};
+    for (const repo of privateRepos) {
+      if (!repo.fork) {
+        const langRes = await fetchWithAuth(repo.languages_url);
+        const repoLanguages = await langRes.json();
+        for (const [lang, bytes] of Object.entries(repoLanguages)) {
+          privateLanguages[lang] = (privateLanguages[lang] || 0) + (bytes as number);
+        }
+      }
+    }
 
-		const aggregatedLanguages: { [key: string]: number } = {};
-		languageData.forEach((repoLangs: { [key: string]: number }) => {
-			Object.entries(repoLangs).forEach(([lang, bytes]) => {
-				aggregatedLanguages[lang] = (aggregatedLanguages[lang] || 0) + bytes;
-			});
-		});
-
-		const topLanguages: { [key: string]: number } = {};
-		Object.entries(aggregatedLanguages)
-			.sort((a, b) => b[1] - a[1])
-			.slice(0, 6)
-			.forEach(([lang, bytes]) => {
-				topLanguages[lang] = bytes;
-			});
-
-		const statsData = {
-			contributions: contributionsData.contributions,
-			total: contributionsData.total.lastYear,
-			languages: topLanguages,
-			wakatime: wakatimeData.data,
-		};
-
-		global.statsCache = {
-			data: statsData,
-			timestamp: now,
-		};
-
-		return NextResponse.json({
-			...statsData,
-			cached: false,
-		});
-	} catch (error: unknown) {
-		console.error("API Error:", error);
-
-		const cache = global.statsCache as StatsCache;
-		if (cache.data) {
-			return NextResponse.json({
-				...cache.data,
-				cached: true,
-				error: `API failure: ${String(error)}`,
-			});
-		}
-
-		return NextResponse.json(
-			{
-				error: `Failed to fetch GitHub data. Possible rate limit. Error: ${String(error)}`,
-			},
-			{ status: 500 },
-		);
-	}
+    return NextResponse.json({
+      contributions,
+      total,
+      publicLanguages,
+      privateLanguages,
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
+  }
 }

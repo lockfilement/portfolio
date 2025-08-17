@@ -7,41 +7,42 @@ export const translations: Record<Language, any> = {
 	en: enTranslations,
 };
 
-export function getTranslation(language: Language, key: string): string {
-	const keys = key.split(".");
-	let value: any = translations[language];
-
-	for (const k of keys) {
-		if (value && typeof value === "object" && k in value) {
-			value = value[k];
+function getNestedValue(obj: any, keys: string[]): any {
+	let value = obj;
+	for (const key of keys) {
+		if (value && typeof value === "object" && key in value) {
+			value = value[key];
 		} else {
-			// If key not found in current language, try fallback to English
-			if (language !== "en") {
-				let fallbackValue = translations["en"];
-				let fallbackFound = true;
-
-				for (const fallbackKey of keys) {
-					if (
-						fallbackValue &&
-						typeof fallbackValue === "object" &&
-						fallbackKey in fallbackValue
-					) {
-						fallbackValue = fallbackValue[fallbackKey];
-					} else {
-						fallbackFound = false;
-						break;
-					}
-				}
-
-				if (fallbackFound && typeof fallbackValue === "string") {
-					return fallbackValue;
-				}
-			}
-
-			// If all else fails, return the key itself
-			return key;
+			return undefined;
 		}
 	}
+	return value;
+}
 
-	return typeof value === "string" ? value : key;
+function getRandomArrayItem(value: any): string {
+	if (Array.isArray(value)) {
+		return value[Math.floor(Math.random() * value.length)];
+	}
+	return value;
+}
+
+export function getTranslation(language: Language, key: string): string {
+	const keys = key.split(".");
+	
+	// Try to get value in current language
+	let value = getNestedValue(translations[language], keys);
+	
+	// If not found and not English, try fallback to English
+	if (value === undefined && language !== "en") {
+		value = getNestedValue(translations["en"], keys);
+	}
+	
+	// If still not found, return the key
+	if (value === undefined) {
+		return key;
+	}
+	
+	// Handle arrays and strings
+	const result = getRandomArrayItem(value);
+	return typeof result === "string" ? result : key;
 }

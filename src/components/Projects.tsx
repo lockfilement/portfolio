@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 import { Card, CardHeader, CardBody } from "@heroui/react";
 import { motion } from "framer-motion";
 import { TextFade } from "../app/structure/TextFade";
@@ -13,15 +13,15 @@ const projects = [
 	{
 		name: "Lush",
 		descriptionKey: "An official organisation for the lush bot.",
-		url: "https://github.com/LushIndustries",
-		icon: "https://cdn.discordapp.com/attachments/1387956126414274600/1391574492861694112/lush-avatar.png?ex=6896943d&is=689542bd&hm=937c86bf1f74c5bc25bfb604db999c4fdb0a4f297c2631ba8f234d70a3b395d3&",
+		url: "https://github.com/LushIndustries  ",
+		icon: "https://media.discordapp.net/attachments/1404099165964730499/1404099240648773733/lush-avatar.webp?ex=6899f4d1&is=6898a351&hm=788c005edcc393a0f7ed73d3c9730f36e95d8fa8e274c8d8d05943279a4d72da&=&format=webp",
 		language: "Python",
 	},
 	{
 		name: "Eowie",
 		descriptionKey: "An all in one bot dedicated to providing the best experience to the best servers on Discord.",
-		url: "https://github.com/EowieCorp",
-		icon: "https://cdn.discordapp.com/attachments/1387956126414274600/1403206318528925797/image.png?ex=6896b538&is=689563b8&hm=ddf73e5f3dae610cd2764a33b6fff99b2b821bd08c8c2b04896169e57111d95e&",
+		url: "https://github.com/EowieCorp  ",
+		icon: "https://media.discordapp.net/attachments/1404099165964730499/1404099591145787412/image.webp?ex=6899f525&is=6898a3a5&hm=710df556b7245aba46f46706f43113277a1594054a3296ca9eccb06775a07278&=&format=webp",
 		language: "Python",
 	},
 ];
@@ -42,7 +42,7 @@ export default function Projects() {
 			const match = project.url.match(/github\.com\/([^\/]+)\/([^\/]+)/);
 			if (match) {
 				const [, owner, repo] = match;
-				fetch(`https://api.github.com/repos/${owner}/${repo}`)
+				fetch(`https://api.github.com/repos/  ${owner}/${repo}`)
 					.then((res) => res.json())
 					.then((data: GitHubRepo) => {
 						setStars((prev) => ({

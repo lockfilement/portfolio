@@ -36,7 +36,7 @@ const WEATHER_ICONS: Record<string, { icon: LucideIcon; color: string }> = {
 	rain: { icon: CloudRain, color: "text-blue-200" },
 	"heavy-snow": { icon: CloudSnow, color: "text-blue-100" },
 	"light-snow": { icon: CloudSnow, color: "text-gray-200" },
-	snow: { icon: CloudSnow, color: "text-blue-100" }, // never snows but i keep dreaming
+	snow: { icon: CloudSnow, color: "text-blue-100" },
 	"partly-cloudy": { icon: CloudSun, color: "text-gray-200" },
 	overcast: { icon: Cloud, color: "text-gray-300" },
 	cloudy: { icon: Cloudy, color: "text-gray-300" },
@@ -156,7 +156,13 @@ const Weather = () => {
 
 const WeatherIcon = ({ condition }: { condition: string }) => {
 	const getWeatherIcon = (condition: string) => {
-		const lowercaseCondition = condition.toLowerCase();
+		const lowercaseCondition = condition.toLowerCase().replace(/\s+/g, "-");
+
+		if (WEATHER_ICONS[lowercaseCondition]) {
+			const matchedIcon = WEATHER_ICONS[lowercaseCondition];
+			const IconComponent = matchedIcon.icon;
+			return <IconComponent className={`w-4 h-4 ${matchedIcon.color}`} />;
+		}
 
 		const matchedIcon =
 			Object.entries(WEATHER_ICONS).find(([key]) =>

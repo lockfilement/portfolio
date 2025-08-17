@@ -49,7 +49,7 @@
     "intro": "Soy un desarrollador de",
     "yearOld": "años",
     "developer": "de",
-    "country": "Ecuador"
+    "country": "República Dominicana"
   },
   "quotes": [
     "Desarrollador creando interfaces modernas y diseños con facilidad.",
@@ -124,7 +124,7 @@
   },
   "footer": {
     "madeWith": "Hecho con NextJS & TailwindCSS",
-    "allRightsReserved": "© 2025 lockfile. Todos los derechos reservados."
+    "allRightsReserved": "© 2025 yann. Todos los derechos reservados."
   },
   "musicStats": {
     "top_artists": "Top Artistas",

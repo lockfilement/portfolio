@@ -19,7 +19,7 @@ const Footer = () => {
 			<div className="w-4/5 h-[2px] mb-2 bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-full relative" />
 			<h1 className="md:text-base text-xs lg:text-sm font-bold text-center text-white relative mb-3 z-10">
 				<a
-					href="https://github.com/doxiado-dev/portfolio"
+					href="https://github.com/sombrasvivasss/portfolio"
 					target="_blank"
 					rel="noopener noreferrer"
 					className="hover:text-gray-300"

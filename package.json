@@ -1,7 +1,7 @@
 {
-  "name": "yann-portfolio",
+  "name": "doxiado-portfolio",
   "version": "1.5.2",
-  "description": "yann Portfolio",
+  "description": "Doxiado Portfolio",
   "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "next dev --turbopack",
@@ -24,7 +24,6 @@
     "next-intl": "^4.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-intersection-observer": "^9.16.0",
     "tailwind-merge": "^3.2.0",
     "typewriter-effect": "^2.22.0"
   },

@@ -40,27 +40,27 @@ export default function CardComponent() {
 	const isInView = useInview(cardRef);
 	const [iconsLoaded, setIconsLoaded] = useState(false);
 	const { language } = useLanguage();
-	const age = useAge("2008-03-26");
+	const age = useAge("2010-12-02");
 
 	const socialLinks: SocialLink[] = useMemo(
 		() => [
       {
-        href: "https://t.me/doxiado      ",
+        href: "https://t.me/lxferzx      ",
         icon: "mdi:telegram",
         alt: "Telegram",
       },
       {
-        href: "https://github.com/doxiado-dev      ",
+        href: "https://github.com/sombrasvivasss      ",
         icon: "mdi:github",
         alt: "GitHub",
       },
       {
-        href: "https://discord.com/users/763141886834769980      ",
+        href: "https://discord.com/users/1398292777900576950      ",
         icon: "mdi:discord",
         alt: "Discord",
       },
       {
-        href: "https://stats.fm/lockfile/      ",
+        href: "https://stats.fm/yannurgod/      ",
         icon: "/assets/statsfm.png",
         alt: "stats.fm",
       },
@@ -175,7 +175,7 @@ export default function CardComponent() {
                         index === 1
                           ? "linear-gradient(to top,rgba(255, 17, 0, 1),rgba(255, 132, 0, 1))"
                           : index === 3
-                          ? "linear-gradient(to right, rgba(255, 238, 0, 1), rgba(0, 26, 255, 1), rgba(255, 0, 0, 1))"
+                          ? "linear-gradient(to right, rgba(4, 0, 255, 1), rgba(255, 255, 255, 1), rgba(255, 0, 0, 1))"
                           : "linear-gradient(to right, rgb(229, 231, 235), rgb(209, 213, 219), rgb(229, 231, 235))",
                     }}
 										transition={{

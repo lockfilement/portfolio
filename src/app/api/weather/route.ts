@@ -36,8 +36,8 @@ if (!global.weatherCache) {
 }
 
 const CACHE_DURATION = 15 * 60 * 1000;
-const API_URL = "https://wttr.in/Ecuador?format=j1";
-const FALLBACK_URL = "https://wttr.in/Ecuador?format=%t|%C";
+const API_URL = "https://wttr.in/Dominican+Republic?format=j1";
+const FALLBACK_URL = "https://wttr.in/Dominican+Republic?format=%t|%C";
 
 const getCachedData = () => {
 	const cache = global.weatherCache!;
@@ -51,7 +51,7 @@ const getCachedData = () => {
 				hour: "numeric",
 				minute: "numeric",
 				hour12: true,
-				timeZone: "America/Guayaquil",
+				timeZone: "America/Santo_Domingo",
 			}),
 			cached: true,
 		});
@@ -74,7 +74,7 @@ export async function GET() {
 					hour: "numeric",
 					minute: "numeric",
 					hour12: true,
-					timeZone: "America/Guayaquil",
+					timeZone: "America/Santo_Domingo",
 				}),
 				cached: true,
 			});
@@ -135,7 +135,7 @@ export async function GET() {
 				hour: "numeric",
 				minute: "numeric",
 				hour12: true,
-				timeZone: "America/Guayaquil",
+				timeZone: "America/Santo_Domingo",
 			}),
 			forecast,
 		};
@@ -163,7 +163,7 @@ export async function GET() {
 					hour: "numeric",
 					minute: "numeric",
 					hour12: true,
-					timeZone: "America/Guayaquil",
+					timeZone: "America/Santo_Domingo",
 				}),
 				cached: true,
 			});
@@ -192,7 +192,7 @@ export async function GET() {
 						hour: "numeric",
 						minute: "numeric",
 						hour12: true,
-						timeZone: "America/Guayaquil",
+						timeZone: "America/Santo_Domingo",
 					}),
 				};
 

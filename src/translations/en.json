@@ -5,7 +5,7 @@
   "source": "Source",
   "footer": {
     "madeWith": "Made with NextJS & TailwindCSS",
-    "allRightsReserved": "© 2025 lockfile. All rights reserved."
+    "allRightsReserved": "© 2025 yann. All rights reserved."
   },
   "aboutMe": {
     "title": "About Me",
@@ -53,7 +53,7 @@
     "intro": "I'm a",
     "yearOld": "year old",
     "developer": "developer from",
-    "country": "Ecuador"
+    "country": "Dominican Republic"
   },
   "quotes": [
     "Developer creating modern interfaces and designs with ease.",

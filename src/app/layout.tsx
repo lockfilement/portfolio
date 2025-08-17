@@ -3,16 +3,16 @@ import { LanguageProvider } from "@/hooks/LanguageContext";
 import { IntlProvider } from "./providers";
 
 export const metadata = {
-	title: "fer's Portfolio",
+	title: "yann's Portfolio",
 	description: "designer, developer and web artist",
 	openGraph: {
 		siteName: "portfolio",
-		title: "fer",
+		title: "yann",
 		description: "designer, developer and web artist",
-		url: "https://doxiado.vercel.app/",
+		url: "https://yann.dev",
 		images: [
 			{
-				url: "https://doxiado.vercel.app/assets/embed.png",
+				url: "https://yann.dev/assets/embed.png",
 			},
 		],
 	},

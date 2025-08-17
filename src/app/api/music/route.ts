@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const USER_ID = "312x4czwmi7ifl32dth5mongebcm";
+const USER_ID = "31mfwctmusrgnxl6tm3t7m2sl6mu";
 const range = "weeks";
 
 declare global {

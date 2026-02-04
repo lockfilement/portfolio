@@ -1,5 +1,0 @@
-onlyBuiltDependencies:
-  - '@biomejs/biome'
-  - '@heroui/shared-utils'
-  - '@vercel/speed-insights'
-  - sharp

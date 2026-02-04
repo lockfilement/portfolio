@@ -5,6 +5,7 @@ interface Project {
   description: string;
   tech: string[];
   link?: string;
+  image: string;
 }
 
 const projects: Project[] = [
@@ -13,6 +14,7 @@ const projects: Project[] = [
     description: 'Lyzor LLC operates digital products ranging from Discord Bots to full fledged apps.',
     tech: ['Next.js', 'React', 'JavaScript', 'Python'],
     link: 'https://lyzor.netlify.app/',
+    image: 'https://avatars.githubusercontent.com/u/226920714?s=400&u=3419a9e97c9ada24037cd8d8846cea18e9d6cf2d&v=4'
   },
 ];
 

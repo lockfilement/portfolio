@@ -11,8 +11,8 @@ interface Project {
 const projects: Project[] = [
   {
     name: 'Lyzor LLC',
-    description: 'Lyzor LLC operates digital products ranging from Discord Bots to full fledged apps.',
-    tech: ['Next.js', 'React', 'JavaScript', 'Python'],
+    description: 'operates digital products ranging from Discord Bots to full fledged apps',
+    tech: ['Next.js', 'ReactJS', 'JavaScript', 'Python'],
     link: 'https://lyzor.netlify.app/',
     image: 'https://avatars.githubusercontent.com/u/226920714?s=200'
   },

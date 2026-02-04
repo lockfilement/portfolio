@@ -9,10 +9,10 @@ interface Project {
 
 const projects: Project[] = [
   {
-    name: 'portfolio',
-    description: 'Personal portfolio website with modern design',
-    tech: ['Next.js', 'React'],
-    link: 'https://urb4nayl.vercel.app/',
+    name: 'Lyzor LLC',
+    description: 'Lyzor LLC operates digital products ranging from Discord Bots to full fledged apps.',
+    tech: ['Next.js', 'React', 'JavaScript', 'Python'],
+    link: 'https://lyzor.netlify.app/',
   },
 ];
 

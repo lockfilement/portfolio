@@ -19,7 +19,7 @@ const tracks = [
 ];
 
 // Discord User ID for Lanyard API
-const DISCORD_USER_ID = '544047377540186114';
+const DISCORD_USER_ID = '344131223230087177';
 
 const ProfileCard = () => {
   const [activeTab, setActiveTab] = useState<'home' | 'projects' | 'contact'>('home');
@@ -52,7 +52,7 @@ const ProfileCard = () => {
                 {/* Header */}
                 <div className="mb-4 sm:mb-5 md:mb-6">
                   <h1 className="text-xl sm:text-2xl md:text-3xl mb-0 font-medium leading-none tracking-tight font-retro">
-                    alisaa
+                    beirùt
                   </h1>
                   <p className="text-muted-foreground text-xs sm:text-sm leading-none mt-1 sm:mt-2">
                     full stack developer specializing in modern web technologies

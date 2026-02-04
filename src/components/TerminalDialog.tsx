@@ -62,7 +62,7 @@ const TerminalDialog = ({ open, onOpenChange }: TerminalDialogProps) => {
   Created by: beirùt`;
         break;
       case 'discord':
-        response = '💬 Discord: lockfilement';
+        response = '💬 Discord: lockfile';
         break;
       case 'clear':
         setHistory([{ type: 'output', content: 'Terminal cleared. Type "help" for commands.' }]);

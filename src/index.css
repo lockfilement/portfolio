@@ -34,7 +34,7 @@
     --input: 240 4% 16%;
     --ring: 0 0% 100%;
 
-    --radius: 0.75rem;
+    --radius: 0.25rem;
 
     /* Custom tokens for cursi.ng aesthetic */
     --card-glass: 0 0% 0% / 0.3;

@@ -39,10 +39,10 @@ const DiscordStatus = ({ userId }: DiscordStatusProps) => {
   }, [userId]);
 
   const statusLabels = {
-    online: 'Online',
-    offline: 'Offline',
-    idle: 'Idle',
-    dnd: 'Do Not Disturb',
+    online: '',
+    offline: '',
+    idle: '',
+    dnd: '',
   };
 
   if (loading) {

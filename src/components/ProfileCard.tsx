@@ -10,11 +10,11 @@ import albumCover from '@/assets/album-cover.jpg';
 
 const tracks = [
   {
-    title: 'Shake it to the max',
-    artist: 'MOLIY',
+    title: 'cONTRA><Mi',
+    artist: 'Duki ft. WE$T DUBAI',
     albumArt: albumCover,
     duration: '3:00',
-    audioSrc: '/audio/shake-it-to-the-max.mp3',
+    audioSrc: '/audio/Duki ft WE$T DUBAI - cONTRAMi.mp3',
   },
 ];
 
